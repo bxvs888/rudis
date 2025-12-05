@@ -143,6 +143,19 @@ function zhSidebar(): DefaultTheme.SidebarItem[] {
       ],
     },
     {
+      text: '应用',
+      items: [
+        {
+          text: '在 Rust 中使用',
+          link: '/zh/docs/guides/rust',
+        },
+        {
+          text: '在 Java 中使用',
+          link: '/zh/docs/guides/java',
+        },
+      ],
+    },
+    {
       text: '高级',
       items: [
         {
@@ -304,6 +317,19 @@ function enSidebar(): DefaultTheme.SidebarItem[] {
       ],
     },
     {
+      text: 'Application Guides',
+      items: [
+        {
+          text: 'Using Rudis in Rust',
+          link: '/docs/guides/rust',
+        },
+        {
+          text: 'Using Rudis in Java',
+          link: '/docs/guides/java',
+        },
+      ],
+    },
+    {
       text: 'Advanced',
       items: [
         {
@@ -313,6 +339,14 @@ function enSidebar(): DefaultTheme.SidebarItem[] {
         {
           text: 'Security',
           link: '/docs/advance/security',
+        },
+        {
+          text: 'Transactions',
+          link: '/docs/advance/transactions',
+        },
+        {
+          text: 'Replication',
+          link: '/docs/advance/replication',
         },
       ],
     }
