@@ -4,19 +4,19 @@ layout: home
 
 hero:
   name: Rudis
-  text: 高性能内存数据库
-  tagline: 远程字典服务，内存数据库
+  text: A high-performance in memory database
+  tagline: Remote Dictionary Service, In memory database
   image:
     light: /imgs/logo.png
     dark: /imgs/logo.png
-    alt: 通用
+    alt: General
   actions:
     - theme: brand
-      text: 项目介绍
-      link: /zh/docs/guides/introduce
+      text: Introduce
+      link: /docs/guides/introduce
     - theme: alt
-      text: 安装指南
-      link: /zh/docs/guides/install
+      text: Install
+      link: /docs/guides/install
 
 features:
   - title: 跨平台支持
