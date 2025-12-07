@@ -10,12 +10,32 @@ Sorted set commands are similar to sets, but each member is associated with a sc
 
 ## Command List
 
-- [ZADD](./sortedSet/zadd.md) - Adds one or more members to a sorted set, or updates the score of an existing member
-- [ZCARD](./sortedSet/zcard.md) - Returns the number of elements in a sorted set
-- [ZCOUNT](./sortedSet/zcount.md) - Counts the number of members in a sorted set within a specified score range
-- [ZRANK](./sortedSet/zrank.md) - Returns the rank of a specified member in a sorted set (starting from 0)
-- [ZREM](./sortedSet/zrem.md) - Removes one or more members from a sorted set
-- [ZSCORE](./sortedSet/zscore.md) - Returns the score of a specified member in a sorted set
+<div class="command-cards">
+  <a href="./sortedSet/zadd.md" class="command-card">
+    <div class="card-title">ZADD</div>
+    <div class="card-description">Adds one or more members to a sorted set, or updates the score of an existing member</div>
+  </a>
+  <a href="./sortedSet/zcard.md" class="command-card">
+    <div class="card-title">ZCARD</div>
+    <div class="card-description">Returns the number of elements in a sorted set</div>
+  </a>
+  <a href="./sortedSet/zcount.md" class="command-card">
+    <div class="card-title">ZCOUNT</div>
+    <div class="card-description">Counts the number of members in a sorted set within a specified score range</div>
+  </a>
+  <a href="./sortedSet/zrank.md" class="command-card">
+    <div class="card-title">ZRANK</div>
+    <div class="card-description">Returns the rank of a specified member in a sorted set (starting from 0)</div>
+  </a>
+  <a href="./sortedSet/zrem.md" class="command-card">
+    <div class="card-title">ZREM</div>
+    <div class="card-description">Removes one or more members from a sorted set</div>
+  </a>
+  <a href="./sortedSet/zscore.md" class="command-card">
+    <div class="card-title">ZSCORE</div>
+    <div class="card-description">Returns the score of a specified member in a sorted set</div>
+  </a>
+</div>
 
 ## Use Cases
 

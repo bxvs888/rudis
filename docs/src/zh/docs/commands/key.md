@@ -10,21 +10,68 @@ description: Rudis 键命令概述，包括 DEL、EXISTS、EXPIRE、EXPIREAT、K
 
 ## 命令列表
 
-- [DEL](./key/del.md) - 删除指定的键
-- [EXISTS](./key/exists.md) - 检查给定的一个或多个键是否存在
-- [EXPIRE](./key/expire.md) - 为给定的键设置过期时间（以秒为单位）
-- [EXPIREAT](./key/expireat.md) - 为给定的键设置过期时间戳（以秒为单位的 Unix 时间戳）
-- [KEYS](./key/keys.md) - 查找所有符合给定模式的键
-- [MOVE](./key/move.md) - 将指定的键从当前数据库移动到指定编号的数据库
-- [PERSIST](./key/persist.md) - 移除给定键的过期时间，使键成为持久化的键
-- [PEXPIRE](./key/pexpire.md) - 为给定的键设置过期时间（以毫秒为单位）
-- [PEXPIREAT](./key/pexpireat.md) - 为给定的键设置过期时间戳（以毫秒为单位的 Unix 时间戳）
-- [PTTL](./key/pttl.md) - 类似于 TTL 命令，但以毫秒为单位返回键的剩余生存时间
-- [RANDOMKEY](./key/randomkey.md) - 从当前数据库中随机返回一个键
-- [RENAME](./key/rename.md) - 将键重命名为新键
-- [RENAMENX](./key/renamenx.md) - 仅在新键不存在时，将键重命名为新键
-- [TTL](./key/ttl.md) - 返回键的剩余生存时间（以秒为单位）
-- [TYPE](./key/type.md) - 返回存储在键中的值的类型
+<div class="command-cards">
+  <a href="./key/del.md" class="command-card">
+    <div class="card-title">DEL</div>
+    <div class="card-description">删除指定的键</div>
+  </a>
+  <a href="./key/exists.md" class="command-card">
+    <div class="card-title">EXISTS</div>
+    <div class="card-description">检查给定的一个或多个键是否存在</div>
+  </a>
+  <a href="./key/expire.md" class="command-card">
+    <div class="card-title">EXPIRE</div>
+    <div class="card-description">为给定的键设置过期时间（以秒为单位）</div>
+  </a>
+  <a href="./key/expireat.md" class="command-card">
+    <div class="card-title">EXPIREAT</div>
+    <div class="card-description">为给定的键设置过期时间戳（以秒为单位的 Unix 时间戳）</div>
+  </a>
+  <a href="./key/keys.md" class="command-card">
+    <div class="card-title">KEYS</div>
+    <div class="card-description">查找所有符合给定模式的键</div>
+  </a>
+  <a href="./key/move.md" class="command-card">
+    <div class="card-title">MOVE</div>
+    <div class="card-description">将指定的键从当前数据库移动到指定编号的数据库</div>
+  </a>
+  <a href="./key/persist.md" class="command-card">
+    <div class="card-title">PERSIST</div>
+    <div class="card-description">移除给定键的过期时间，使键成为持久化的键</div>
+  </a>
+  <a href="./key/pexpire.md" class="command-card">
+    <div class="card-title">PEXPIRE</div>
+    <div class="card-description">为给定的键设置过期时间（以毫秒为单位）</div>
+  </a>
+  <a href="./key/pexpireat.md" class="command-card">
+    <div class="card-title">PEXPIREAT</div>
+    <div class="card-description">为给定的键设置过期时间戳（以毫秒为单位的 Unix 时间戳）</div>
+  </a>
+  <a href="./key/pttl.md" class="command-card">
+    <div class="card-title">PTTL</div>
+    <div class="card-description">类似于 TTL 命令，但以毫秒为单位返回键的剩余生存时间</div>
+  </a>
+  <a href="./key/randomkey.md" class="command-card">
+    <div class="card-title">RANDOMKEY</div>
+    <div class="card-description">从当前数据库中随机返回一个键</div>
+  </a>
+  <a href="./key/rename.md" class="command-card">
+    <div class="card-title">RENAME</div>
+    <div class="card-description">将键重命名为新键</div>
+  </a>
+  <a href="./key/renamenx.md" class="command-card">
+    <div class="card-title">RENAMENX</div>
+    <div class="card-description">仅在新键不存在时，将键重命名为新键</div>
+  </a>
+  <a href="./key/ttl.md" class="command-card">
+    <div class="card-title">TTL</div>
+    <div class="card-description">返回键的剩余生存时间（以秒为单位）</div>
+  </a>
+  <a href="./key/type.md" class="command-card">
+    <div class="card-title">TYPE</div>
+    <div class="card-description">返回存储在键中的值的类型</div>
+  </a>
+</div>
 
 ## 使用场景
 

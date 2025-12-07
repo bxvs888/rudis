@@ -10,15 +10,44 @@ description: Rudis 集合命令概述，包括 SADD、SCARD、SINTER、SISMEMBER
 
 ## 命令列表
 
-- [SADD](./set/sadd.md) - 向集合中添加一个或多个成员
-- [SCARD](./set/scard.md) - 返回集合中元素的数量
-- [SINTER](./set/sinter.md) - 返回给定所有集合的交集
-- [SISMEMBER](./set/sismember.md) - 判断成员是否是集合的成员
-- [SMEMBERS](./set/smembers.md) - 返回集合中的所有成员
-- [SPOP](./set/spop.md) - 移除并返回集合中的一个随机元素
-- [SREM](./set/srem.md) - 移除集合中的一个或多个成员
-- [SUNION](./set/sunion.md) - 返回给定所有集合的并集
-- [SUNIONSTORE](./set/sunionstore.md) - 将给定所有集合的并集存储在指定的集合中
+<div class="command-cards">
+  <a href="./set/sadd.md" class="command-card">
+    <div class="card-title">SADD</div>
+    <div class="card-description">向集合中添加一个或多个成员</div>
+  </a>
+  <a href="./set/scard.md" class="command-card">
+    <div class="card-title">SCARD</div>
+    <div class="card-description">返回集合中元素的数量</div>
+  </a>
+  <a href="./set/sinter.md" class="command-card">
+    <div class="card-title">SINTER</div>
+    <div class="card-description">返回给定所有集合的交集</div>
+  </a>
+  <a href="./set/sismember.md" class="command-card">
+    <div class="card-title">SISMEMBER</div>
+    <div class="card-description">判断成员是否是集合的成员</div>
+  </a>
+  <a href="./set/smembers.md" class="command-card">
+    <div class="card-title">SMEMBERS</div>
+    <div class="card-description">返回集合中的所有成员</div>
+  </a>
+  <a href="./set/spop.md" class="command-card">
+    <div class="card-title">SPOP</div>
+    <div class="card-description">移除并返回集合中的一个随机元素</div>
+  </a>
+  <a href="./set/srem.md" class="command-card">
+    <div class="card-title">SREM</div>
+    <div class="card-description">移除集合中的一个或多个成员</div>
+  </a>
+  <a href="./set/sunion.md" class="command-card">
+    <div class="card-title">SUNION</div>
+    <div class="card-description">返回给定所有集合的并集</div>
+  </a>
+  <a href="./set/sunionstore.md" class="command-card">
+    <div class="card-title">SUNIONSTORE</div>
+    <div class="card-description">将给定所有集合的并集存储在指定的集合中</div>
+  </a>
+</div>
 
 ## 使用场景
 

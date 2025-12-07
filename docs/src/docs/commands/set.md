@@ -10,15 +10,44 @@ Set commands allow you to store unique string elements. Sets are unordered and d
 
 ## Command List
 
-- [SADD](./set/sadd.md) - Adds one or more members to a set
-- [SCARD](./set/scard.md) - Returns the number of elements in a set
-- [SINTER](./set/sinter.md) - Returns the intersection of all given sets
-- [SISMEMBER](./set/sismember.md) - Determines whether a member is a member of a set
-- [SMEMBERS](./set/smembers.md) - Returns all members in a set
-- [SPOP](./set/spop.md) - Removes and returns a random element from a set
-- [SREM](./set/srem.md) - Removes one or more members from a set
-- [SUNION](./set/sunion.md) - Returns the union of all given sets
-- [SUNIONSTORE](./set/sunionstore.md) - Stores the union of all given sets in a specified set
+<div class="command-cards">
+  <a href="./set/sadd.md" class="command-card">
+    <div class="card-title">SADD</div>
+    <div class="card-description">Adds one or more members to a set</div>
+  </a>
+  <a href="./set/scard.md" class="command-card">
+    <div class="card-title">SCARD</div>
+    <div class="card-description">Returns the number of elements in a set</div>
+  </a>
+  <a href="./set/sinter.md" class="command-card">
+    <div class="card-title">SINTER</div>
+    <div class="card-description">Returns the intersection of all given sets</div>
+  </a>
+  <a href="./set/sismember.md" class="command-card">
+    <div class="card-title">SISMEMBER</div>
+    <div class="card-description">Determines whether a member is a member of a set</div>
+  </a>
+  <a href="./set/smembers.md" class="command-card">
+    <div class="card-title">SMEMBERS</div>
+    <div class="card-description">Returns all members in a set</div>
+  </a>
+  <a href="./set/spop.md" class="command-card">
+    <div class="card-title">SPOP</div>
+    <div class="card-description">Removes and returns a random element from a set</div>
+  </a>
+  <a href="./set/srem.md" class="command-card">
+    <div class="card-title">SREM</div>
+    <div class="card-description">Removes one or more members from a set</div>
+  </a>
+  <a href="./set/sunion.md" class="command-card">
+    <div class="card-title">SUNION</div>
+    <div class="card-description">Returns the union of all given sets</div>
+  </a>
+  <a href="./set/sunionstore.md" class="command-card">
+    <div class="card-title">SUNIONSTORE</div>
+    <div class="card-description">Stores the union of all given sets in a specified set</div>
+  </a>
+</div>
 
 ## Use Cases
 

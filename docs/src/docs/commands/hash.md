@@ -10,18 +10,56 @@ Hash commands allow you to store key-value pairs as hash tables (also known as m
 
 ## Command List
 
-- [HDEL](./hash/hdel.md) - Deletes one or more specified fields from a hash table
-- [HEXISTS](./hash/hexists.md) - Checks if a specified field exists in a hash table
-- [HGET](./hash/hget.md) - Gets the value of a specified field stored in a hash table
-- [HGETALL](./hash/hgetall.md) - Gets all fields and values in a hash table
-- [HKEYS](./hash/hkeys.md) - Gets all field names in a hash table
-- [HLEN](./hash/hlen.md) - Gets the number of fields in a hash table
-- [HMGET](./hash/hmget.md) - Gets the values of all given fields
-- [HMSET](./hash/hmset.md) - Sets multiple field-value pairs to a hash table simultaneously
-- [HSET](./hash/hset.md) - Sets a field-value pair to a hash table
-- [HSETNX](./hash/hsetnx.md) - Sets the value of a field in a hash table only if the field does not exist
-- [HSTRLEN](./hash/hstrlen.md) - Returns the string length of the value of a specified field in a hash table
-- [HVALS](./hash/hvals.md) - Returns all values in a hash table
+<div class="command-cards">
+  <a href="./hash/hdel.md" class="command-card">
+    <div class="card-title">HDEL</div>
+    <div class="card-description">Deletes one or more specified fields from a hash table</div>
+  </a>
+  <a href="./hash/hexists.md" class="command-card">
+    <div class="card-title">HEXISTS</div>
+    <div class="card-description">Checks if a specified field exists in a hash table</div>
+  </a>
+  <a href="./hash/hget.md" class="command-card">
+    <div class="card-title">HGET</div>
+    <div class="card-description">Gets the value of a specified field stored in a hash table</div>
+  </a>
+  <a href="./hash/hgetall.md" class="command-card">
+    <div class="card-title">HGETALL</div>
+    <div class="card-description">Gets all fields and values in a hash table</div>
+  </a>
+  <a href="./hash/hkeys.md" class="command-card">
+    <div class="card-title">HKEYS</div>
+    <div class="card-description">Gets all field names in a hash table</div>
+  </a>
+  <a href="./hash/hlen.md" class="command-card">
+    <div class="card-title">HLEN</div>
+    <div class="card-description">Gets the number of fields in a hash table</div>
+  </a>
+  <a href="./hash/hmget.md" class="command-card">
+    <div class="card-title">HMGET</div>
+    <div class="card-description">Gets the values of all given fields</div>
+  </a>
+  <a href="./hash/hmset.md" class="command-card">
+    <div class="card-title">HMSET</div>
+    <div class="card-description">Sets multiple field-value pairs to a hash table simultaneously</div>
+  </a>
+  <a href="./hash/hset.md" class="command-card">
+    <div class="card-title">HSET</div>
+    <div class="card-description">Sets a field-value pair to a hash table</div>
+  </a>
+  <a href="./hash/hsetnx.md" class="command-card">
+    <div class="card-title">HSETNX</div>
+    <div class="card-description">Sets the value of a field in a hash table only if the field does not exist</div>
+  </a>
+  <a href="./hash/hstrlen.md" class="command-card">
+    <div class="card-title">HSTRLEN</div>
+    <div class="card-description">Returns the string length of the value of a specified field in a hash table</div>
+  </a>
+  <a href="./hash/hvals.md" class="command-card">
+    <div class="card-title">HVALS</div>
+    <div class="card-description">Returns all values in a hash table</div>
+  </a>
+</div>
 
 ## Use Cases
 

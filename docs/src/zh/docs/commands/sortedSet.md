@@ -10,12 +10,32 @@ description: Rudis 有序集合命令概述，包括 ZADD、ZCARD、ZCOUNT、ZRA
 
 ## 命令列表
 
-- [ZADD](./sortedSet/zadd.md) - 向有序集合中添加一个或多个成员，或更新已存在成员的分数
-- [ZCARD](./sortedSet/zcard.md) - 返回有序集合中元素的数量
-- [ZCOUNT](./sortedSet/zcount.md) - 计算在有序集合中指定分数范围内的成员数量
-- [ZRANK](./sortedSet/zrank.md) - 返回有序集合中指定成员的排名（从0开始）
-- [ZREM](./sortedSet/zrem.md) - 移除有序集合中的一个或多个成员
-- [ZSCORE](./sortedSet/zscore.md) - 返回有序集合中指定成员的分数
+<div class="command-cards">
+  <a href="./sortedSet/zadd.md" class="command-card">
+    <div class="card-title">ZADD</div>
+    <div class="card-description">向有序集合中添加一个或多个成员，或更新已存在成员的分数</div>
+  </a>
+  <a href="./sortedSet/zcard.md" class="command-card">
+    <div class="card-title">ZCARD</div>
+    <div class="card-description">返回有序集合中元素的数量</div>
+  </a>
+  <a href="./sortedSet/zcount.md" class="command-card">
+    <div class="card-title">ZCOUNT</div>
+    <div class="card-description">计算在有序集合中指定分数范围内的成员数量</div>
+  </a>
+  <a href="./sortedSet/zrank.md" class="command-card">
+    <div class="card-title">ZRANK</div>
+    <div class="card-description">返回有序集合中指定成员的排名（从0开始）</div>
+  </a>
+  <a href="./sortedSet/zrem.md" class="command-card">
+    <div class="card-title">ZREM</div>
+    <div class="card-description">移除有序集合中的一个或多个成员</div>
+  </a>
+  <a href="./sortedSet/zscore.md" class="command-card">
+    <div class="card-title">ZSCORE</div>
+    <div class="card-description">返回有序集合中指定成员的分数</div>
+  </a>
+</div>
 
 ## 使用场景
 

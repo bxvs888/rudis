@@ -10,16 +10,48 @@ List commands allow you to store string elements in lists, supporting insertion 
 
 ## Command List
 
-- [LINDEX](./list/lindex.md) - Returns the element at the specified index position in the list
-- [LLEN](./list/llen.md) - Returns the length of the list
-- [LPOP](./list/lpop.md) - Removes and returns the first element of the list
-- [LPUSH](./list/lpush.md) - Inserts one or more values at the head of the list
-- [LPUSHX](./list/lpushx.md) - Inserts a value at the head of an existing list
-- [LRANGE](./list/lrange.md) - Returns elements in the specified range of the list
-- [LSET](./list/lset.md) - Sets the value of a list element by index
-- [RPUSH](./list/rpush.md) - Inserts one or more values at the tail of the list
-- [RPUSHX](./list/rpushx.md) - Inserts a value at the tail of an existing list
-- [RPOP](./list/rpop.md) - Removes and returns the last element of the list
+<div class="command-cards">
+  <a href="./list/lindex.md" class="command-card">
+    <div class="card-title">LINDEX</div>
+    <div class="card-description">Returns the element at the specified index position in the list</div>
+  </a>
+  <a href="./list/llen.md" class="command-card">
+    <div class="card-title">LLEN</div>
+    <div class="card-description">Returns the length of the list</div>
+  </a>
+  <a href="./list/lpop.md" class="command-card">
+    <div class="card-title">LPOP</div>
+    <div class="card-description">Removes and returns the first element of the list</div>
+  </a>
+  <a href="./list/lpush.md" class="command-card">
+    <div class="card-title">LPUSH</div>
+    <div class="card-description">Inserts one or more values at the head of the list</div>
+  </a>
+  <a href="./list/lpushx.md" class="command-card">
+    <div class="card-title">LPUSHX</div>
+    <div class="card-description">Inserts a value at the head of an existing list</div>
+  </a>
+  <a href="./list/lrange.md" class="command-card">
+    <div class="card-title">LRANGE</div>
+    <div class="card-description">Returns elements in the specified range of the list</div>
+  </a>
+  <a href="./list/lset.md" class="command-card">
+    <div class="card-title">LSET</div>
+    <div class="card-description">Sets the value of a list element by index</div>
+  </a>
+  <a href="./list/rpush.md" class="command-card">
+    <div class="card-title">RPUSH</div>
+    <div class="card-description">Inserts one or more values at the tail of the list</div>
+  </a>
+  <a href="./list/rpushx.md" class="command-card">
+    <div class="card-title">RPUSHX</div>
+    <div class="card-description">Inserts a value at the tail of an existing list</div>
+  </a>
+  <a href="./list/rpop.md" class="command-card">
+    <div class="card-title">RPOP</div>
+    <div class="card-description">Removes and returns the last element of the list</div>
+  </a>
+</div>
 
 ## Use Cases
 

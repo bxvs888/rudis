@@ -10,19 +10,60 @@ description: Rudis 字符串命令概述，包括 APPEND、DECR、DECRBY、GET�
 
 ## 命令列表
 
-- [APPEND](./string/append.md) - 如果键已经存在并且是一个字符串，追加值到键的末尾
-- [DECR](./string/decr.md) - 将键中存储的数字值减一
-- [DECRBY](./string/decrby.md) - 将键中存储的数字值减去指定的数值
-- [GET](./string/get.md) - 获取指定键的值
-- [GETRANGE](./string/getrange.md) - 返回键中字符串值的子字符
-- [GETSET](./string/getset.md) - 将给定键的值设为新值，并返回键的旧值
-- [INCR](./string/incr.md) - 将键中存储的数字值增一
-- [INCRBY](./string/incrby.md) - 将键中存储的数字值加上指定的数值
-- [INCRBYFLOAT](./string/incrbyfloat.md) - 将键中存储的数字值加上指定的浮点数
-- [MGET](./string/mget.md) - 获取所有给定键的值
-- [MSET](./string/mset.md) - 同时设置一个或多个键值对
-- [SET](./string/set.md) - 设置指定键的值
-- [STRLEN](./string/strlen.md) - 返回键所存储的字符串值的长度
+<div class="command-cards">
+  <a href="./string/append.md" class="command-card">
+    <div class="card-title">APPEND</div>
+    <div class="card-description">如果键已经存在并且是一个字符串，追加值到键的末尾</div>
+  </a>
+  <a href="./string/decr.md" class="command-card">
+    <div class="card-title">DECR</div>
+    <div class="card-description">将键中存储的数字值减一</div>
+  </a>
+  <a href="./string/decrby.md" class="command-card">
+    <div class="card-title">DECRBY</div>
+    <div class="card-description">将键中存储的数字值减去指定的数值</div>
+  </a>
+  <a href="./string/get.md" class="command-card">
+    <div class="card-title">GET</div>
+    <div class="card-description">获取指定键的值</div>
+  </a>
+  <a href="./string/getrange.md" class="command-card">
+    <div class="card-title">GETRANGE</div>
+    <div class="card-description">返回键中字符串值的子字符</div>
+  </a>
+  <a href="./string/getset.md" class="command-card">
+    <div class="card-title">GETSET</div>
+    <div class="card-description">将给定键的值设为新值，并返回键的旧值</div>
+  </a>
+  <a href="./string/incr.md" class="command-card">
+    <div class="card-title">INCR</div>
+    <div class="card-description">将键中存储的数字值增一</div>
+  </a>
+  <a href="./string/incrby.md" class="command-card">
+    <div class="card-title">INCRBY</div>
+    <div class="card-description">将键中存储的数字值加上指定的数值</div>
+  </a>
+  <a href="./string/incrbyfloat.md" class="command-card">
+    <div class="card-title">INCRBYFLOAT</div>
+    <div class="card-description">将键中存储的数字值加上指定的浮点数</div>
+  </a>
+  <a href="./string/mget.md" class="command-card">
+    <div class="card-title">MGET</div>
+    <div class="card-description">获取所有给定键的值</div>
+  </a>
+  <a href="./string/mset.md" class="command-card">
+    <div class="card-title">MSET</div>
+    <div class="card-description">同时设置一个或多个键值对</div>
+  </a>
+  <a href="./string/set.md" class="command-card">
+    <div class="card-title">SET</div>
+    <div class="card-description">设置指定键的值</div>
+  </a>
+  <a href="./string/strlen.md" class="command-card">
+    <div class="card-title">STRLEN</div>
+    <div class="card-description">返回键所存储的字符串值的长度</div>
+  </a>
+</div>
 
 ## 使用场景
 
