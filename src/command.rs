@@ -11,10 +11,9 @@ use crate::{
             lindex::Lindex, llen::Llen, lpop::Lpop, lpush::Lpush, lpushx::Lpushx, lrange::Lrange,
             lset::Lset, rpop::Rpop, rpush::Rpush, rpushx::Rpushx,
         }, server::{bgsave::Bgsave, dbsize::Dbsize, flushall::Flushall, flushdb::Flushdb, info::Info, save::Save}, server_sync::{psync::Psync, replconf::Replconf}, set::{
-            sadd::Sadd, scard::Scard, sinter::Sinter, sismember::Sismember, smembers::Smembers,
+            sadd::Sadd, scard::Scard, sdiff::Sdiff, sinter::Sinter, sismember::Sismember, smembers::Smembers,
             spop::Spop, srem::Srem, sunion::Sunion, sunionstore::Sunionstore,
-        }, sorted_set::{
-            zadd::Zadd, zcard::Zcard, zcount::Zcount, zrank::Zrank, zrem::Zrem, zscore::Zscore,
+        }, sorted_set::{            zadd::Zadd, zcard::Zcard, zcount::Zcount, zrank::Zrank, zrem::Zrem, zscore::Zscore,
         }, string::{
             append::Append, decr::Decr, decrby::Decrby, get::Get, getrange::GetRange, getset::GetSet, incr::Incr, incrby::Incrby, incrbyfloat::IncrbyFloat, mget::Mget, mset::Mset, set::Set, strlen::Strlen
         }, transaction::{
@@ -73,11 +72,11 @@ pub enum Command {
     Sismember(Sismember),
     Smembers(Smembers),
     Scard(Scard),
+    Sdiff(Sdiff),
     Sinter(Sinter),
     Spop(Spop),
     Srem(Srem),
-    Flushall(Flushall),
-    Lpushx(Lpushx),
+    Flushall(Flushall),    Lpushx(Lpushx),
     Rpushx(Rpushx),
     Decr(Decr),
     Incr(Incr),
@@ -176,6 +175,7 @@ impl Command {
             "ZCARD" => Command::Zcard(Zcard::parse_from_frame(frame)?),
             "ZSCORE" => Command::Zscore(Zscore::parse_from_frame(frame)?),
             "ZREM" => Command::Zrem(Zrem::parse_from_frame(frame)?),
+            "SDIFF" => Command::Sdiff(Sdiff::parse_from_frame(frame)?),
             "SINTER" => Command::Sinter(Sinter::parse_from_frame(frame)?),
             "ZRANK" => Command::Zrank(Zrank::parse_from_frame(frame)?),
             "INCRBY" => Command::Incrby(Incrby::parse_from_frame(frame)?),
@@ -232,6 +232,7 @@ impl Command {
             Command::Rpush(_) |
             Command::Rpushx(_) |
             Command::Sadd(_) |
+            Command::Sdiff(_) |
             Command::Sinter(_) |
             Command::Spop(_) |
             Command::Srem(_) |

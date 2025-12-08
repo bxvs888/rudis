@@ -187,6 +187,7 @@ impl Db {
             Command::Llen(llen) => llen.apply(self),
             Command::Sadd(sadd) => sadd.apply(self),
             Command::Scard(scard) => scard.apply(self),
+            Command::Sdiff(sdiff) => sdiff.apply(self),
             Command::Spop(spop) => spop.apply(self),
             Command::Srem(srem) => srem.apply(self),
             Command::Sinter(sinter) => sinter.apply(self),
