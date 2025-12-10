@@ -43,8 +43,8 @@ Rudis 是一个采用 Rust 语言编写得高性能键值存储系统，旨在�
 - 新增 maxclients 配置, 限制客户端连接数量。
 - 新增 appendsync 配置，配置 AOF 持久化的执行策略。
 - 新增 Set 类型 Sscan、Sdiff、Setrange 命令。
-- 兼容 Redis-insight 的 Set 数据的预览问题。
-- 优化 Keys 命令算法，提升查询性能。
+- 优化 Keys 命令算法，提升 88%-99.55 % 性能。
+- 兼容 Redis-insight 的 Set 预览问题。
 
 ### v0.1.0
 
