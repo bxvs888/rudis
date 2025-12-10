@@ -359,6 +359,12 @@ impl Db {
      * @return 符合模式的所有键的列表
      */
     pub fn keys(&self, pattern: &str) -> Vec<String> {
+        // 特殊情况优化：如果模式是 "*"，直接返回所有键
+        if pattern == "*" {
+            return self.records.keys().cloned().collect();
+        }
+        
+        // 对于其他模式，使用过滤器
         self.records.keys().filter(|key| pattern::is_match(key, pattern)).cloned().collect()
     }
 
