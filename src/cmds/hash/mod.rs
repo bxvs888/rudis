@@ -10,3 +10,4 @@ pub mod hset;
 pub mod hget;
 pub mod hdel;
 pub mod hlen;
+pub mod hincrby;

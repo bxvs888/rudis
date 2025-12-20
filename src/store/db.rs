@@ -181,6 +181,7 @@ impl Db {
             Command::Hlen(hlen) => hlen.apply(self),
             Command::Hkeys(hkeys) => hkeys.apply(self),
             Command::Hvals(hvals) => hvals.apply(self),
+            Command::Hincrby(hincrby) => hincrby.apply(self),
             Command::Lpush(lpush) => lpush.apply(self),
             Command::Rpush(rpush) => rpush.apply(self),
             Command::Lindex(lindex) => lindex.apply(self),

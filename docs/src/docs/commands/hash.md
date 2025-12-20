@@ -59,6 +59,10 @@ Hash commands allow you to store key-value pairs as hash tables (also known as m
     <div class="card-title">HVALS</div>
     <div class="card-description">Returns all values in a hash table</div>
   </a>
+  <a href="./hash/hincrby" class="command-card">
+    <div class="card-title">HINCRBY</div>
+    <div class="card-description">Increments the integer value of a hash field by the given number</div>
+  </a>
 </div>
 
 ## Use Cases

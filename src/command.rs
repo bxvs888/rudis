@@ -3,7 +3,7 @@ use anyhow::Error;
 use crate::{
     cmds::{
         connect::{auth::Auth, client::Client, echo::Echo, ping::Ping, select::Select}, hash::{
-            hdel::Hdel, hexists::Hexists, hget::Hget, hgetall::Hgetall, hkeys::Hkeys, hlen::Hlen,
+            hdel::Hdel, hexists::Hexists, hget::Hget, hgetall::Hgetall, hincrby::Hincrby, hkeys::Hkeys, hlen::Hlen,
             hmget::Hmget, hmset::Hmset, hset::Hset, hsetnx::Hsetnx, hstrlen::Hstrlen, hvals::Hvals,
         }, key::{
             del::Del, exists::Exists, expire::Expire, expireat::ExpireAt, keys::Keys, r#move::Move, persist::Persist, pexpire::Pexpire, pexpireat::PexpireAt, pttl::Pttl, randomkey::RandomKey, rename::Rename, renamenx::Renamenx, scan::Scan, ttl::Ttl, r#type::Type
@@ -61,6 +61,7 @@ pub enum Command {
     Hlen(Hlen),
     Hsetnx(Hsetnx),
     Hgetall(Hgetall),
+    Hincrby(Hincrby),
     Hkeys(Hkeys),
     Lindex(Lindex),
     Persist(Persist),
@@ -159,6 +160,7 @@ impl Command {
             "LPOP" => Command::Lpop(Lpop::parse_from_frame(frame)?),
             "LLEN" => Command::Llen(Llen::parse_from_frame(frame)?),
             "HVALS" => Command::Hvals(Hvals::parse_from_frame(frame)?),
+            "HINCRBY" => Command::Hincrby(Hincrby::parse_from_frame(frame)?),
             "RPUSH" => Command::Rpush(Rpush::parse_from_frame(frame)?),
             "LPUSH" => Command::Lpush(Lpush::parse_from_frame(frame)?),
             "SADD" => Command::Sadd(Sadd::parse_from_frame(frame)?),
@@ -234,6 +236,7 @@ impl Command {
             Command::Hdel(_) |
             Command::Hmset(_) |
             Command::Hset(_) |
+            Command::Hincrby(_) |
             Command::Hsetnx(_) |
             Command::Lpop(_) |
             Command::Lpush(_) |
