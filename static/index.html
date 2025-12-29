@@ -456,9 +456,128 @@
         ::-webkit-scrollbar-track { background: var(--bg-primary); }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
+
+        /* 登录页面 */
+        .login-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .login-page.hidden { display: none; }
+
+        .login-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 48px 40px;
+            width: 380px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .login-logo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .login-logo img { height: 56px; }
+
+        .login-logo-text {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .login-logo-text span {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .login-desc {
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        .login-form .form-group { margin-bottom: 20px; }
+
+        .login-form input {
+            width: 100%;
+            padding: 12px 14px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .login-form input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(220, 56, 45, 0.15);
+        }
+        .login-form input::placeholder { color: var(--text-secondary); }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent);
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.1s;
+        }
+
+        .login-btn:hover { background: var(--accent-hover); }
+        .login-btn:active { transform: scale(0.98); }
+
+        .login-error {
+            color: var(--danger);
+            font-size: 13px;
+            text-align: center;
+            margin-top: 16px;
+            min-height: 20px;
+        }
     </style>
 </head>
 <body>
+    <!-- 登录页面 -->
+    <div class="login-page" id="loginPage">
+        <div class="login-box">
+            <div class="login-logo">
+                <img src="/logo.png" alt="Rudis">
+                <div class="login-logo-text">
+                    <span>Rudis</span>
+                    <div class="login-desc">A high-performance in-memory database</div>
+                </div>
+            </div>
+            <form class="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <input type="text" id="loginUser" placeholder="用户名" autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="loginPass" placeholder="密码" autocomplete="current-password">
+                </div>
+                <button type="submit" class="login-btn">登 录</button>
+                <div class="login-error" id="loginError"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 主应用 -->
+    <div id="appContainer" style="display:none;height:100%;flex-direction:column;">
     <!-- 顶部区域 -->
     <div class="header">
         <div class="logo">
@@ -520,6 +639,7 @@
             </div>
         </div>
     </div>
+    </div> <!-- appContainer end -->
 
     <!-- 新建键模态框 -->
     <div class="modal" id="createModal">
@@ -557,6 +677,48 @@
         let currentDb = 0;
         let selectedKey = null;
         let keys = [];
+        let isLoggedIn = false;
+
+        // 登录处理
+        async function handleLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('loginUser').value;
+            const pass = document.getElementById('loginPass').value;
+            const errorEl = document.getElementById('loginError');
+            errorEl.textContent = '';
+
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: user, password: pass })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    isLoggedIn = true;
+                    sessionStorage.setItem('rudis_logged', '1');
+                    document.getElementById('loginPage').classList.add('hidden');
+                    document.getElementById('appContainer').style.display = 'flex';
+                    init();
+                } else {
+                    errorEl.textContent = data.message || '登录失败';
+                }
+            } catch (err) {
+                errorEl.textContent = '网络错误';
+            }
+        }
+
+        // 检查登录状态
+        function checkLogin() {
+            if (sessionStorage.getItem('rudis_logged') === '1') {
+                isLoggedIn = true;
+                document.getElementById('loginPage').classList.add('hidden');
+                document.getElementById('appContainer').style.display = 'flex';
+                init();
+            }
+        }
+
+        checkLogin();
 
         // 初始化
         async function init() {

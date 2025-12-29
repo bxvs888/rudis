@@ -73,6 +73,14 @@ pub struct Args {
     /// Web 管理界面端口
     #[arg(long, default_value = "8080")]
     pub webport: u16,
+
+    /// Web 管理界面用户名
+    #[arg(long, default_value = "admin")]
+    pub webuser: String,
+
+    /// Web 管理界面密码
+    #[arg(long, default_value = "admin")]
+    pub webpass: String,
 }
 
 impl Args {
@@ -210,6 +218,20 @@ impl Args {
                 if let Ok(port) = wp.parse() {
                     self.webport = port;
                 }
+            }
+        }
+
+        // webuser
+        if self.webuser == "admin" {
+            if let Some(user) = config_map.get("webuser") {
+                self.webuser = user.clone();
+            }
+        }
+
+        // webpass
+        if self.webpass == "admin" {
+            if let Some(pass) = config_map.get("webpass") {
+                self.webpass = pass.clone();
             }
         }
     }

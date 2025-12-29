@@ -41,6 +41,8 @@ impl WebServer {
         let web_state = Arc::new(WebState {
             db_manager: self.db_manager,
             max_databases,
+            webuser: self.args.webuser.clone(),
+            webpass: self.args.webpass.clone(),
         });
         
         let web_router = create_router(web_state);
@@ -52,6 +54,8 @@ impl WebServer {
 pub struct WebState {
     pub db_manager: Arc<DatabaseManager>,
     pub max_databases: usize,
+    pub webuser: String,
+    pub webpass: String,
 }
 
 /// 数据库信息
@@ -94,6 +98,13 @@ struct UpdateTtlRequest {
     ttl: u64,
 }
 
+/// 登录请求
+#[derive(Deserialize)]
+struct LoginRequest {
+    username: String,
+    password: String,
+}
+
 /// 查询参数
 #[derive(Deserialize)]
 struct ListKeysQuery {
@@ -104,6 +115,9 @@ struct ListKeysQuery {
 /// 创建Web路由
 fn create_router(state: Arc<WebState>) -> Router {
     Router::new()
+        // 登录接口
+        .route("/api/login", post(login))
+        
         // 服务器信息接口
         .route("/api/stats", get(get_stats))
         
@@ -122,6 +136,24 @@ fn create_router(state: Arc<WebState>) -> Router {
         
         .layer(CorsLayer::permissive())
         .with_state(state)
+}
+
+/// 登录验证
+async fn login(
+    State(state): State<Arc<WebState>>,
+    Json(req): Json<LoginRequest>,
+) -> impl IntoResponse {
+    if req.username == state.webuser && req.password == state.webpass {
+        Json(json!({
+            "success": true,
+            "message": "登录成功"
+        }))
+    } else {
+        Json(json!({
+            "success": false,
+            "message": "用户名或密码错误"
+        }))
+    }
 }
 
 /// 获取服务器统计信息
