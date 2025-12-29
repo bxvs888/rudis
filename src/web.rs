@@ -122,23 +122,14 @@ struct ListKeysQuery {
 /// 创建Web路由
 fn create_router(state: Arc<WebState>) -> Router {
     Router::new()
-        // 登录接口
         .route("/api/login", post(login))
-        
-        // 服务器信息接口
         .route("/api/stats", get(get_stats))
-        
-        // 数据库管理接口
         .route("/api/databases", get(list_databases))
-        
-        // 键管理接口
         .route("/api/keys", get(list_keys))
         .route("/api/keys/:key", get(get_key_value))
-        .route("/api/keys/:key", post(set_key_value))
         .route("/api/keys/:key", delete(delete_key))
         .route("/api/keys/:key/ttl", put(update_key_ttl))
-        
-        // CLI接口
+        .route("/api/keys/:key", post(set_key_value))
         .route("/api/cli", post(execute_cli))
         
         // 静态文件服务
