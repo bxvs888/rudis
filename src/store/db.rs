@@ -206,6 +206,7 @@ impl Db {
             Command::Decr(decr) => decr.apply(self),
             Command::Lset(lset) => lset.apply(self),
             Command::Ltrim(ltrim) => ltrim.apply(self),
+            Command::Lrem(lrem) => lrem.apply(self),
             Command::Zadd(zadd) => zadd.apply(self),
             Command::Zcount(zcount) => zcount.apply(self),
             Command::Zincrby(zincrby) => zincrby.apply(self),

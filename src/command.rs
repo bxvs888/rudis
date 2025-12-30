@@ -9,7 +9,7 @@ use crate::{
             del::Del, exists::Exists, expire::Expire, expireat::ExpireAt, keys::Keys, r#move::Move, persist::Persist, pexpire::Pexpire, pexpireat::PexpireAt, pttl::Pttl, randomkey::RandomKey, rename::Rename, renamenx::Renamenx, scan::Scan, ttl::Ttl, r#type::Type
         }, listing::{
             lindex::Lindex, llen::Llen, lpop::Lpop, lpush::Lpush, lpushx::Lpushx, lrange::Lrange,
-            lset::Lset, ltrim::Ltrim, rpop::Rpop, rpush::Rpush, rpushx::Rpushx,
+            lrem::Lrem, lset::Lset, ltrim::Ltrim, rpop::Rpop, rpush::Rpush, rpushx::Rpushx,
         }, server::{bgsave::Bgsave, dbsize::Dbsize, flushall::Flushall, flushdb::Flushdb, info::Info, save::Save}, server_sync::{psync::Psync, replconf::Replconf}, set::{
             sadd::Sadd, scard::Scard, sdiff::Sdiff, sinter::Sinter, sismember::Sismember, smembers::Smembers, spop::Spop, srem::Srem, sscan::Sscan, sunion::Sunion, sunionstore::Sunionstore
         }, sorted_set::{
@@ -87,6 +87,7 @@ pub enum Command {
     IncrbyFloat(IncrbyFloat),
     Lset(Lset),
     Ltrim(Ltrim),
+    Lrem(Lrem),
     Sunion(Sunion),
     Zcount(Zcount),
     Zadd(Zadd),
@@ -181,6 +182,7 @@ impl Command {
             "DECR" => Command::Decr(Decr::parse_from_frame(frame)?),
             "LSET" => Command::Lset(Lset::parse_from_frame(frame)?),
             "LTRIM" => Command::Ltrim(Ltrim::parse_from_frame(frame)?),
+            "LREM" => Command::Lrem(Lrem::parse_from_frame(frame)?),
             "SUNION" => Command::Sunion(Sunion::parse_from_frame(frame)?),
             "ZCOUNT" => Command::Zcount(Zcount::parse_from_frame(frame)?),
             "ZADD" => Command::Zadd(Zadd::parse_from_frame(frame)?),
@@ -248,6 +250,7 @@ impl Command {
             Command::Lpushx(_) |
             Command::Lset(_) |
             Command::Ltrim(_) |
+            Command::Lrem(_) |
             Command::Rpop(_) |
             Command::Rpush(_) |
             Command::Rpushx(_) |
