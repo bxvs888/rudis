@@ -291,6 +291,10 @@
             flex: 1;
             overflow-y: auto;
         }
+        
+        .virtual-list-container {
+            position: relative;
+        }
 
         .key-item {
             padding: 14px 16px;
@@ -1086,29 +1090,159 @@
             } catch (e) { console.error(e); }
         }
 
+        // 虚拟滚动相关变量
+        let virtualList = null;
+        let visibleStart = 0;
+        let visibleEnd = 0;
+        const itemHeight = 64; // 每个键项的高度
+        
+        // 初始化虚拟滚动
+        function initVirtualList() {
+            const container = document.getElementById('keyList');
+            container.innerHTML = '<div class="virtual-list-container"></div>';
+            virtualList = document.querySelector('.virtual-list-container');
+            
+            container.addEventListener('scroll', handleScroll);
+            
+            // 设置容器样式
+            container.style.overflowY = 'auto';
+            container.style.height = '100%';
+        }
+        
+        // 处理滚动事件
+        function handleScroll(e) {
+            const container = e.target;
+            const scrollTop = container.scrollTop;
+            const containerHeight = container.clientHeight;
+            
+            const totalItems = keys.length;
+            const itemsPerScreen = Math.ceil(containerHeight / itemHeight) + 1;
+            
+            visibleStart = Math.floor(scrollTop / itemHeight);
+            visibleEnd = Math.min(visibleStart + itemsPerScreen, totalItems);
+            
+            renderVisibleItems();
+        }
+        
+        // 渲染可见项
+        function renderVisibleItems() {
+            if (!virtualList || keys.length === 0) return;
+            
+            const totalHeight = keys.length * itemHeight;
+            const visibleItems = keys.slice(visibleStart, visibleEnd);
+            
+            // 设置容器总高度以保持滚动条正确
+            virtualList.style.height = totalHeight + 'px';
+            virtualList.style.position = 'relative';
+            
+            // 创建可见项的容器
+            let content = `<div style="position: absolute; top: ${visibleStart * itemHeight}px; width: 100%;">`;
+            
+            for (let i = 0; i < visibleItems.length; i++) {
+                const k = visibleItems[i];
+                const index = visibleStart + i;
+                content += `
+                    <div class="key-item ${selectedKey === k.key ? 'active' : ''}" 
+                         data-index="${index}" 
+                         onclick="selectKey('${escapeAttr(k.key)}')">
+                        <div class="key-name">${escapeHtml(k.key)}</div>
+                        <div class="key-meta">
+                            <span class="key-type ${k.type}">${k.type}</span>
+                            <span>TTL: ${k.ttl === -1 ? '∞' : k.ttl + 's'}</span>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            content += '</div>';
+            virtualList.innerHTML = content;
+        }
+        
         // 渲染键列表
         function renderKeyList() {
             const container = document.getElementById('keyList');
             if (keys.length === 0) {
                 container.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">暂无数据</div></div>';
+                virtualList = null;
                 return;
             }
-            container.innerHTML = keys.map(k => `
-                <div class="key-item ${selectedKey === k.key ? 'active' : ''}" onclick="selectKey('${escapeAttr(k.key)}')">
-                    <div class="key-name">${escapeHtml(k.key)}</div>
-                    <div class="key-meta">
-                        <span class="key-type ${k.type}">${k.type}</span>
-                        <span>TTL: ${k.ttl === -1 ? '∞' : k.ttl + 's'}</span>
-                    </div>
-                </div>
-            `).join('');
+            
+            if (!virtualList) {
+                initVirtualList();
+            }
+            
+            // 重置滚动位置
+            container.scrollTop = 0;
+            visibleStart = 0;
+            
+            // 计算可见范围
+            const containerHeight = container.clientHeight;
+            const itemsPerScreen = Math.ceil(containerHeight / itemHeight) + 1;
+            visibleEnd = Math.min(itemsPerScreen, keys.length);
+            
+            renderVisibleItems();
         }
 
         // 选择键
         async function selectKey(key) {
             selectedKey = key;
-            renderKeyList();
+            // 只更新选中状态，不重新渲染整个列表
+            updateKeySelection();
             await loadKeyDetail(key);
+        }
+        
+        // 更新键选中状态
+        function updateKeySelection() {
+            // 只更新可见项的选中状态
+            if (virtualList) {
+                const container = document.getElementById('keyList');
+                const visibleItems = container.querySelectorAll('.key-item');
+                
+                visibleItems.forEach(item => {
+                    const keyNameElement = item.querySelector('.key-name');
+                    if (keyNameElement) {
+                        const keyName = unescapeHtml(keyNameElement.textContent);
+                        if (keyName === selectedKey) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    }
+                });
+            } else {
+                // 非虚拟滚动情况
+                const items = document.querySelectorAll('.key-item');
+                items.forEach(item => {
+                    const keyNameElement = item.querySelector('.key-name');
+                    if (keyNameElement) {
+                        const keyName = unescapeHtml(keyNameElement.textContent);
+                        if (keyName === selectedKey) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    }
+                });
+            }
+        }
+        
+        // 从元素中提取键名
+        function getKeyFromElement(element) {
+            const keyNameDiv = element.querySelector('.key-name');
+            if (keyNameDiv) {
+                return unescapeHtml(keyNameDiv.textContent);
+            }
+            return null;
+        }
+        
+        // 反转HTML转义
+        function unescapeHtml(str) {
+            return str
+                .replace(/&amp;/g, '&')
+                .replace(/&lt;/g, '<')
+                .replace(/&gt;/g, '>')
+                .replace(/&quot;/g, '"')
+                .replace(/&#039;/g, "'");
         }
 
         // 加载键详情
