@@ -41,10 +41,8 @@ Rudis 是一个采用 Rust 语言编写得高性能键值存储系统，旨在�
 
 - 新增 List 数据结构 Lrem 命令。
 - 新增 String 数据结构 Msetnx 命令。
-- 新增 SortedSet 数据结构 zrange 命令。
-- 新增 SortedSet 数据结构 Zincrby 命令。
-- 新增 SortedSet 数据结构 Zlexcount 命令。
 - 新增 Hash 数据结构 Hincrby、Hincrbyfloat 命令。
+- 新增 SortedSet 数据结构 zrange、Zincrby、Zlexcount 命令。
 - 新增 webport、webuser、webpass 参数，嵌入 Web UI，提供可视化支持。
 - 修复 TTL 命令，在键不存在或未设置过期时间时，返回 Integer 0 的问题。
 - 移除 tempfile、serde_json 依赖包。
