@@ -13,7 +13,7 @@ use crate::{
         }, server::{bgsave::Bgsave, dbsize::Dbsize, flushall::Flushall, flushdb::Flushdb, info::Info, save::Save}, server_sync::{psync::Psync, replconf::Replconf}, set::{
             sadd::Sadd, scard::Scard, sdiff::Sdiff, sinter::Sinter, sismember::Sismember, smembers::Smembers, spop::Spop, srem::Srem, sscan::Sscan, sunion::Sunion, sunionstore::Sunionstore
         }, sorted_set::{
-            zadd::Zadd, zcard::Zcard, zcount::Zcount, zincrby::Zincrby, zlexcount::Zlexcount, zrank::Zrank, zrem::Zrem, zscore::Zscore,
+            zadd::Zadd, zcard::Zcard, zcount::Zcount, zincrby::Zincrby, zlexcount::Zlexcount, zrank::Zrank, zrem::Zrem, zscore::Zscore, zrange::Zrange,
         }, string::{
             append::Append, decr::Decr, decrby::Decrby, get::Get, getrange::GetRange, getset::GetSet, incr::Incr, incrby::Incrby, incrbyfloat::IncrbyFloat, mget::Mget, mset::Mset, msetnx::Msetnx, set::Set, setrange::SetRange, strlen::Strlen
         }, transaction::{
@@ -97,6 +97,7 @@ pub enum Command {
     Zcard(Zcard),
     Zrank(Zrank),
     Zrem(Zrem),
+    Zrange(Zrange),
     Incrby(Incrby),
     Decrby(Decrby),
     Echo(Echo),
@@ -194,6 +195,7 @@ impl Command {
             "SINTER" => Command::Sinter(Sinter::parse_from_frame(frame)?),
             "ZRANK" => Command::Zrank(Zrank::parse_from_frame(frame)?),
             "ZLEXCOUNT" => Command::Zlexcount(Zlexcount::parse_from_frame(frame)?),
+            "ZRANGE" => Command::Zrange(Zrange::parse_from_frame(frame)?),
             "INCRBY" => Command::Incrby(Incrby::parse_from_frame(frame)?),
             "INCRBYFLOAT" => Command::IncrbyFloat(IncrbyFloat::parse_from_frame(frame)?),
             "DECRBY" => Command::Decrby(Decrby::parse_from_frame(frame)?),

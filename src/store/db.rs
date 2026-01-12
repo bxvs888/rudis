@@ -226,6 +226,7 @@ impl Db {
             Command::Scan(scan) => scan.apply(self),
             Command::Sscan(sscan) => sscan.apply(self),
             Command::Msetnx(msetnx) => msetnx.apply(self),
+            Command::Zrange(zrange) => zrange.apply(self),
             _ => Err(Error::msg("Unknown command")),
         }
     }
