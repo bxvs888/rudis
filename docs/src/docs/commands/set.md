@@ -1,7 +1,7 @@
 ---
 title: Set Commands
 titleTemplate: Commands
-description: Overview of Rudis set commands including SADD, SCARD, SINTER, SISMEMBER, SMEMBERS, SPOP, SREM, SUNION, and SUNIONSTORE commands.
+description: Overview of Rudis set commands including SADD, SCARD, SINTER, SISMEMBER, SMEMBERS, SPOP, SREM, SUNION, SUNIONSTORE, SDIFFSTORE, SINTERSTORE, and SMOVE commands.
 ---
 
 # Set Commands
@@ -46,6 +46,18 @@ Set commands allow you to store unique string elements. Sets are unordered and d
   <a href="./set/sunionstore" class="command-card">
     <div class="card-title">SUNIONSTORE</div>
     <div class="card-description">Stores the union of all given sets in a specified set</div>
+  </a>
+  <a href="./set/sdiffstore" class="command-card">
+    <div class="card-title">SDIFFSTORE</div>
+    <div class="card-description">Computes the difference of all given sets and stores it in a specified set</div>
+  </a>
+  <a href="./set/sinterstore" class="command-card">
+    <div class="card-title">SINTERSTORE</div>
+    <div class="card-description">Computes the intersection of all given sets and stores it in a specified set</div>
+  </a>
+  <a href="./set/smove" class="command-card">
+    <div class="card-title">SMOVE</div>
+    <div class="card-description">Moves a member from one set to another</div>
   </a>
 </div>
 
