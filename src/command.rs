@@ -11,11 +11,11 @@ use crate::{
             lindex::Lindex, llen::Llen, lpop::Lpop, lpush::Lpush, lpushx::Lpushx, lrange::Lrange,
             lrem::Lrem, lset::Lset, ltrim::Ltrim, rpop::Rpop, rpush::Rpush, rpushx::Rpushx,
         }, server::{bgsave::Bgsave, dbsize::Dbsize, flushall::Flushall, flushdb::Flushdb, info::Info, save::Save}, server_sync::{psync::Psync, replconf::Replconf}, set::{
-            sadd::Sadd, scard::Scard, sdiff::Sdiff, sinter::Sinter, sismember::Sismember, smembers::Smembers, spop::Spop, srem::Srem, sscan::Sscan, sunion::Sunion, sunionstore::Sunionstore, sdiffstore::Sdiffstore, sinterstore::Sinterstore, smove::Smove
+            sadd::Sadd, scard::Scard, sdiff::Sdiff, sinter::Sinter, sismember::Sismember, smembers::Smembers, spop::Spop, srem::Srem, sscan::Sscan, sunion::Sunion, sunionstore::Sunionstore, srandmember::Srandmember, sdiffstore::Sdiffstore, sinterstore::Sinterstore, smove::Smove
         }, sorted_set::{
             zadd::Zadd, zcard::Zcard, zcount::Zcount, zincrby::Zincrby, zlexcount::Zlexcount, zrank::Zrank, zrem::Zrem, zscore::Zscore, zrange::Zrange,
         }, string::{
-            append::Append, decr::Decr, decrby::Decrby, get::Get, getrange::GetRange, getset::GetSet, incr::Incr, incrby::Incrby, incrbyfloat::IncrbyFloat, mget::Mget, mset::Mset, msetnx::Msetnx, set::Set, setrange::SetRange, strlen::Strlen
+            append::Append, decr::Decr, decrby::Decrby, get::Get, getrange::GetRange, getset::GetSet, incr::Incr, incrby::Incrby, incrbyfloat::IncrbyFloat, mget::Mget, mset::Mset, msetnx::Msetnx, set::Set, setrange::SetRange, strlen::Strlen, setex::Setex, psetex::Psetex, setnx::Setnx
         }, transaction::{
             discard::Discard, exec::Exec, multi::Multi
         }, unknown::Unknown
@@ -46,6 +46,9 @@ pub enum Command {
     Mget(Mget),
     Msetnx(Msetnx),
     Strlen(Strlen),
+    Setex(Setex),
+    Psetex(Psetex),
+    Setnx(Setnx),
     Sunionstore(Sunionstore),
     Renamenx(Renamenx),
     Rename(Rename),
@@ -83,6 +86,7 @@ pub enum Command {
     Sdiffstore(Sdiffstore),
     Sinterstore(Sinterstore),
     Smove(Smove),
+    Srandmember(Srandmember),
     Flushall(Flushall),    Lpushx(Lpushx),
     Rpushx(Rpushx),
     Decr(Decr),
@@ -149,6 +153,9 @@ impl Command {
             "MSETNX" => Command::Msetnx(Msetnx::parse_from_frame(frame)?),
             "APPEND" => Command::Append(Append::parse_from_frame(frame)?),
             "DBSIZE" => Command::Dbsize(Dbsize::parse_from_frame(frame)?),
+            "SETEX" => Command::Setex(Setex::parse_from_frame(frame)?),
+            "PSETEX" => Command::Psetex(Psetex::parse_from_frame(frame)?),
+            "SETNX" => Command::Setnx(Setnx::parse_from_frame(frame)?),
             "HSET" => Command::Hset(Hset::parse_from_frame(frame)?),
             "HGET" => Command::Hget(Hget::parse_from_frame(frame)?),
             "HMSET" => Command::Hmset(Hmset::parse_from_frame(frame)?),
@@ -183,6 +190,7 @@ impl Command {
             "SDIFFSTORE" => Command::Sdiffstore(Sdiffstore::parse_from_frame(frame)?),
             "SINTERSTORE" => Command::Sinterstore(Sinterstore::parse_from_frame(frame)?),
             "SMOVE" => Command::Smove(Smove::parse_from_frame(frame)?),
+            "SRANDMEMBER" => Command::Srandmember(Srandmember::parse_from_frame(frame)?),
             "LPUSHX" => Command::Lpushx(Lpushx::parse_from_frame(frame)?),
             "RPUSHX" => Command::Rpushx(Rpushx::parse_from_frame(frame)?),
             "INCR" => Command::Incr(Incr::parse_from_frame(frame)?),
@@ -245,6 +253,9 @@ impl Command {
             Command::Msetnx(_) |
             Command::Set(_) | 
             Command::SetRange(_) |
+            Command::Setex(_) |
+            Command::Psetex(_) |
+            Command::Setnx(_) |
             Command::Flushall(_) |
             Command::Flushdb(_) |
             Command::Hdel(_) |

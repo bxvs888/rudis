@@ -12,3 +12,4 @@ pub mod sscan;
 pub mod sdiffstore;
 pub mod sinterstore;
 pub mod smove;
+pub mod srandmember;
