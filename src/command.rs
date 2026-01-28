@@ -8,7 +8,7 @@ use crate::{
         }, key::{
             del::Del, exists::Exists, expire::Expire, expireat::ExpireAt, keys::Keys, r#move::Move, persist::Persist, pexpire::Pexpire, pexpireat::PexpireAt, pttl::Pttl, randomkey::RandomKey, rename::Rename, renamenx::Renamenx, scan::Scan, ttl::Ttl, r#type::Type
         }, listing::{
-            lindex::Lindex, llen::Llen, lpop::Lpop, lpush::Lpush, lpushx::Lpushx, lrange::Lrange,
+            blpop::Blpop, brpop::Brpop, lindex::Lindex, llen::Llen, lpop::Lpop, lpush::Lpush, lpushx::Lpushx, lrange::Lrange,
             lrem::Lrem, lset::Lset, ltrim::Ltrim, rpop::Rpop, rpush::Rpush, rpushx::Rpushx,
         }, server::{bgsave::Bgsave, dbsize::Dbsize, flushall::Flushall, flushdb::Flushdb, info::Info, save::Save}, server_sync::{psync::Psync, replconf::Replconf}, set::{
             sadd::Sadd, scard::Scard, sdiff::Sdiff, sinter::Sinter, sismember::Sismember, smembers::Smembers, spop::Spop, srem::Srem, sscan::Sscan, sunion::Sunion, sunionstore::Sunionstore, srandmember::Srandmember, sdiffstore::Sdiffstore, sinterstore::Sinterstore, smove::Smove
@@ -121,6 +121,9 @@ pub enum Command {
     Info(Info),
     Move(Move),
     Sscan(Sscan),
+    // 阻塞列表命令
+    Blpop(Blpop),
+    Brpop(Brpop),
     // 事务命令
     Multi(Multi),
     Discard(Discard),
@@ -228,6 +231,8 @@ impl Command {
             "DISCARD" => Command::Discard(Discard::parse_from_frame(frame)?),
             "SCAN" => Command::Scan(Scan::parse_from_frame(frame)?),
             "SSCAN" => Command::Sscan(Sscan::parse_from_frame(frame)?),
+            "BLPOP" => Command::Blpop(<Blpop as crate::cmds::async_command::HandlerAsyncCommand>::parse_from_frame(frame)?),
+            "BRPOP" => Command::Brpop(<Brpop as crate::cmds::async_command::HandlerAsyncCommand>::parse_from_frame(frame)?),
             _ => Command::Unknown(Unknown::parse_from_frame(frame)?),
         };
         Ok(command)
