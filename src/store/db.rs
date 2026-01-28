@@ -1,5 +1,5 @@
 use std::{
-    collections::{BTreeMap, HashMap, HashSet}, sync::{atomic::{AtomicU64, Ordering}}
+    collections::{HashMap, HashSet}, sync::{atomic::{AtomicU64, Ordering}}
 };
 
 use anyhow::Error;
@@ -12,6 +12,7 @@ use tokio::sync::{
 
 use crate::{command::Command, frame::Frame, tools::pattern};
 use crate::store::hyperloglog::HyperLogLog;
+use crate::store::sorted_set::SortedSet;
 
 // 数据库快照数据结构
 #[derive(Clone, Encode, Decode)]
@@ -50,7 +51,7 @@ impl Default for DatabaseSnapshot {
 pub enum Structure {
     String(String),
     Hash(HashMap<String, String>),
-    SortedSet(BTreeMap<String, f64>),
+    SortedSet(SortedSet),
     VectorCollection(Vector),
     Set(HashSet<String>),
     List(Vec<String>),
