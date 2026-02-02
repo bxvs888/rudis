@@ -1,23 +1,24 @@
 use anyhow::Error;
 use crate::{frame::Frame, server::Handler};
-use crate::cmds::async_command::HandlerAsyncCommand;
+use crate::store::blocking::BlockDirection;
 
 /// BLPOP 命令：阻塞式从列表左端弹出元素
-/// 
+///
 /// 这个命令需要在 Handler 中处理，因为：
 /// 1. 需要异步等待（tokio::select!）
 /// 2. 需要访问 blocking_manager 和 session_manager
 /// 3. 需要跨任务通信
-/// 
-/// **实现标准**：实现了 `HandlerAsyncCommand` trait，所有逻辑都在 `apply` 方法中
+///
+/// 所有逻辑都在 `apply` 方法中，不依赖 server.rs
 #[derive(Clone)]
 pub struct Blpop {
     keys: Vec<String>,
     timeout: u64,  // 秒，0 表示永久阻塞（实际限制为 3600 秒）
 }
 
-impl HandlerAsyncCommand for Blpop {
-    fn parse_from_frame(frame: Frame) -> Result<Self, Error> {
+impl Blpop {
+    /// 从 Frame 解析 BLPOP 命令
+    pub fn parse_from_frame(frame: Frame) -> Result<Self, Error> {
         let args = frame.get_args();
         
         if args.len() < 3 {
@@ -45,42 +46,27 @@ impl HandlerAsyncCommand for Blpop {
     /// 在 Handler 中执行 BLPOP 命令
     /// 
     /// 流程：
-    /// 1. 先非阻塞检查数据库，如果列表非空，立即执行 LPOP
-    /// 2. 如果列表为空，注册阻塞请求
+    /// 1. 遍历所有 keys 非阻塞检查，如果某个列表非空，立即返回
+    /// 2. 如果所有列表都为空，注册阻塞请求
     /// 3. 使用 tokio::select! 等待结果或超时
-    /// 
-    /// 所有逻辑都在这里，不依赖 server.rs
-    async fn apply(self, handler: &mut Handler) -> Result<Frame, Error> {
-        use crate::store::blocking::BlockDirection;
+    pub async fn apply(&mut self, handler: &mut Handler) -> Result<Frame, Error> {
         use tokio::time::{sleep, Duration};
         
-        // 1. 先尝试非阻塞获取：检查第一个键是否非空
-        let first_key = &self.keys[0];
-        let lpop_frame = Frame::Array(vec![
-            Frame::BulkString("LPOP".to_string()),
-            Frame::BulkString(first_key.clone()),
-        ]);
-        
-        let lpop_cmd = match crate::command::Command::parse_from_frame(lpop_frame) {
-            Ok(cmd) => cmd,
-            Err(_) => return Ok(Frame::Error("Internal error".to_string())),
-        };
-        
-        // 非阻塞执行 LPOP
-        let immediate_result = handler.apply_db_command(lpop_cmd).await?;
-        
-        // 如果列表非空，直接返回结果
-        if !matches!(immediate_result, Frame::Null) {
-            // 将 LPOP 的结果转换为 BLPOP 的格式 [key, value]
-            if let Frame::BulkString(value) = immediate_result {
+        // 1. 遍历所有 keys，非阻塞检查是否非空
+        // Redis BLPOP 语义：按顺序检查所有 key，返回第一个非空列表的结果
+        for key in &self.keys {
+            let pop_result = self.non_blocking_pop(handler, key).await?;
+            
+            if let Some(value) = pop_result {
                 return Ok(Frame::Array(vec![
-                    Frame::BulkString(first_key.clone()),
+                    Frame::BulkString(key.clone()),
                     Frame::BulkString(value),
                 ]));
             }
+            // 当前 key 对应的列表为空，继续检查下一个 key
         }
         
-        // 2. 列表为空，注册阻塞请求
+        // 2. 所有列表都为空，注册阻塞请求
         let timeout = if self.timeout == 0 {
             Some(Duration::from_secs(3600)) // 设置合理上限
         } else {
@@ -116,5 +102,28 @@ impl HandlerAsyncCommand for Blpop {
             }
         }
     }
-}
 
+    /// 非阻塞弹出：尝试从指定列表弹出一个元素
+    /// 
+    /// 返回 Some(value) 如果列表非空，返回 None 如果列表为空
+    async fn non_blocking_pop(&self, handler: &mut Handler, key: &str) -> Result<Option<String>, Error> {
+        let pop_frame = Frame::Array(vec![
+            Frame::BulkString("LPOP".to_string()),
+            Frame::BulkString(key.to_string()),
+        ]);
+        
+        let pop_cmd = match crate::command::Command::parse_from_frame(pop_frame) {
+            Ok(cmd) => cmd,
+            Err(_) => return Ok(None),
+        };
+        
+        // 非阻塞执行 LPOP
+        let result = handler.apply_db_command(pop_cmd).await?;
+        
+        if let Frame::BulkString(value) = result {
+            Ok(Some(value))
+        } else {
+            Ok(None)
+        }
+    }
+}

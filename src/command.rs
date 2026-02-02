@@ -251,8 +251,8 @@ impl Command {
             "PFADD" => Command::Pfadd(Pfadd::parse_from_frame(frame)?),
             "PFCOUNT" => Command::Pfcount(Pfcount::parse_from_frame(frame)?),
             "PFMERGE" => Command::Pfmerge(Pfmerge::parse_from_frame(frame)?),
-            "BLPOP" => Command::Blpop(<Blpop as crate::cmds::async_command::HandlerAsyncCommand>::parse_from_frame(frame)?),
-            "BRPOP" => Command::Brpop(<Brpop as crate::cmds::async_command::HandlerAsyncCommand>::parse_from_frame(frame)?),
+            "BLPOP" => Command::Blpop(Blpop::parse_from_frame(frame)?),
+            "BRPOP" => Command::Brpop(Brpop::parse_from_frame(frame)?),
             _ => Command::Unknown(Unknown::parse_from_frame(frame)?),
         };
         Ok(command)

@@ -22,9 +22,9 @@ use crate::replication::ReplicationManager;
 use crate::command::Command;
 use crate::frame::Frame;
 
-mod command_handler;
+mod async_dispatch;
 mod state;
-use command_handler::try_apply_command;
+use async_dispatch::dispatch;
 use state::ServerState;
 
 pub struct Server {
@@ -357,7 +357,7 @@ impl Handler {
     /// 执行服务器命令
     async fn apply_command(&mut self, command: Command) -> Result<Frame, Error> {
         // 尝试使用统一的命令处理入口（处理需要 Handler 上下文的命令）
-        if let Some(result) = try_apply_command(self, &command).await {
+        if let Some(result) = dispatch(self, &command).await {
             return result;
         }
 
@@ -406,10 +406,10 @@ impl Handler {
                     results.push(Frame::Error("ERR nested transaction commands not allowed".to_string()));
                 },
                 _ => {
-                    // 优先尝试通过 try_apply_command 执行命令
+                    // 优先尝试通过 dispatch 执行命令
                     // 这对于 LPUSH/RPUSH 等命令至关重要，因为它们需要检查并唤醒阻塞的客户端（BLPOP/BRPOP）
-                    // 如果在这里绕过 try_apply_command，事务中的 LPUSH 将直接写入数据库，而不会唤醒等待者
-                    if let Some(res) = try_apply_command(self, &command).await {
+                    // 如果在这里绕过 dispatch，事务中的 LPUSH 将直接写入数据库，而不会唤醒等待者
+                    if let Some(res) = dispatch(self, &command).await {
                         match res {
                             Ok(frame) => results.push(frame),
                             Err(e) => results.push(Frame::Error(e.to_string())),
